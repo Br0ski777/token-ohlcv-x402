@@ -56,6 +56,57 @@ Do NOT use for real-time orderbook -- use dex_analyze_orderbook_depth instead. D
         },
         required: [],
       },
+      outputSchema: {
+          "type": "object",
+          "properties": {
+            "results": {
+              "type": "number",
+              "description": "Number of candles"
+            },
+            "source": {
+              "type": "string",
+              "description": "Data source"
+            },
+            "tokenId": {
+              "type": "string",
+              "description": "Token identifier"
+            },
+            "interval": {
+              "type": "string",
+              "description": "Candle interval"
+            },
+            "candles": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "timestamp": {
+                    "type": "number"
+                  },
+                  "open": {
+                    "type": "number"
+                  },
+                  "high": {
+                    "type": "number"
+                  },
+                  "low": {
+                    "type": "number"
+                  },
+                  "close": {
+                    "type": "number"
+                  },
+                  "volume": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          },
+          "required": [
+            "results",
+            "candles"
+          ]
+        },
     },
   ],
 };
