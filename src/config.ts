@@ -3,7 +3,7 @@ import type { ApiConfig } from "./shared";
 export const API_CONFIG: ApiConfig = {
   name: "token-ohlcv",
   slug: "token-ohlcv",
-  description: "Historical OHLCV candlestick data for any token via CoinGecko and GeckoTerminal.",
+  description: "Historical OHLCV candles for any token -- daily, 4h, 1h intervals. CoinGecko + GeckoTerminal powered.",
   version: "1.0.0",
   routes: [
     {
@@ -12,8 +12,19 @@ export const API_CONFIG: ApiConfig = {
       price: "$0.002",
       description: "Get historical OHLCV candles for any token by ID or contract address",
       toolName: "token_get_ohlcv_history",
-      toolDescription:
-        "Use this when you need historical price candlestick data for any token. Returns OHLCV (open, high, low, close, volume) candles for any time interval. Supports all CoinGecko-listed tokens by ID (e.g. bitcoin, ethereum) and on-chain tokens by contract address via GeckoTerminal. Do NOT use for real-time orderbook — use hyperliquid_get_market_data. Do NOT use for swap quotes — use dex_get_swap_quote or jupiter_get_swap_quote. Do NOT use for news — use crypto_get_latest_news. Do NOT use for funding rates — use perp_scan_funding_arbitrage.",
+      toolDescription: `Use this when you need historical price candlestick data for any token. Returns OHLCV candles in JSON.
+
+1. candles: array of candlestick objects with timestamp, open, high, low, close, volume
+2. token: token identifier used
+3. interval: candle interval (daily, 4h, 1h)
+4. days: number of days of history returned
+5. source: data source (CoinGecko or GeckoTerminal)
+
+Example output: {"candles":[{"timestamp":1712966400,"open":3105.20,"high":3142.80,"low":3089.50,"close":3128.60,"volume":1250000000}],"token":"ethereum","interval":"daily","days":30,"source":"CoinGecko"}
+
+Use this FOR technical analysis, backtesting, trend detection, and charting. Supports 10,000+ tokens by CoinGecko ID or on-chain contract address via GeckoTerminal.
+
+Do NOT use for real-time orderbook -- use dex_analyze_orderbook_depth instead. Do NOT use for swap quotes -- use dex_get_swap_quote instead. Do NOT use for news -- use crypto_get_latest_news instead. Do NOT use for funding rates -- use perp_scan_funding_arbitrage instead.`,
       inputSchema: {
         type: "object",
         properties: {
