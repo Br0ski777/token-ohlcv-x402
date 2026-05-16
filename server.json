@@ -12,7 +12,7 @@
   "remotes": [
     {
       "type": "sse",
-      "url": "https://token-ohlcv-x402-production.up.railway.app/mcp"
+      "url": "https://token-ohlcv.api.klymax402.com/mcp"
     }
   ]
 }
