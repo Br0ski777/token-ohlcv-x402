@@ -35,7 +35,8 @@ Any x402-aware client ([`@x402/fetch`](https://www.npmjs.com/package/@x402/fetch
 
 | Tool | Method | Path | Price | Description |
 |---|---|---|---|---|
-| `token_get_ohlcv_history` | GET | `/api/candles` | $0.002 | Get historical OHLCV candles for any token by ID or contract address |
+| `token_get_ohlcv_history` | GET | `/api/candles` | $0.005 | Get historical OHLCV candles for any token by ID or contract address |
+| `token_get_ohlcv_history` | POST | `/api/candles` | $0.005 | Get historical OHLCV candles for any token by ID or contract address (POST variant) |
 
 ### `token_get_ohlcv_history`
 
@@ -69,8 +70,41 @@ Example response:
 
 **Not for**: swap quotes (use `dex_get_swap_quote`), news (use `crypto_get_latest_news`), funding rates (use `perp_scan_funding_arbitrage`).
 
+### `token_get_ohlcv_history`
+
+Use this when you need historical price candlestick data for any token. Returns OHLCV candles in JSON. POST variant of token_get_ohlcv_history -- same params passed as JSON body instead of query string.
+
+**Parameters**
+
+| Name | Type | Required | Description |
+|---|---|---|---|
+| `token` | string | no | CoinGecko token ID (e.g. bitcoin, ethereum, solana). Use this OR contract+chain. |
+| `contract` | string | no | On-chain contract address (e.g. 0x...). Use with chain parameter for GeckoTerminal lookup. |
+| `chain` | string | no | Blockchain network for contract lookup: base, ethereum, solana, arbitrum, polygon, optimism, bsc. |
+| `days` | number | no | Number of days of history (default 30, max 365). For 1h interval max 2 days, for 4h max 90 days. |
+| `interval` | string | no | Candle interval: daily (default), 4h (if days <= 90), 1h (if days <= 2). |
+
+**Returns**
+
+- `candles` -- array of candlestick objects with timestamp, open, high, low, close, volume
+- `token` -- token identifier used
+- `interval` -- candle interval (daily, 4h, 1h)
+- `days` -- number of days of history returned
+- `source` -- data source (CoinGecko or GeckoTerminal)
+
+Example response:
+
+```json
+{"candles":[{"timestamp":1712966400,"open":3105.20,"high":3142.80,"low":3089.50,"close":3128.60,"volume":1250000000}],"token":"ethereum","interval":"daily","days":30,"source":"CoinGecko"}
+```
+
+**When to use**: technical analysis, backtesting, trend detection, and charting. Supports 10,000+ tokens by CoinGecko ID or on-chain contract address via GeckoTerminal.
+
+**Not for**: swap quotes (use `dex_get_swap_quote`), news (use `crypto_get_latest_news`), funding rates (use `perp_scan_funding_arbitrage`).
+
 ## Example agent prompts
 
+- "Historical price candlestick data for any token"
 - "Historical price candlestick data for any token"
 
 ## Payment
