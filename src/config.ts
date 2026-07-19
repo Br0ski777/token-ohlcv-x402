@@ -9,7 +9,7 @@ export const API_CONFIG: ApiConfig = {
     {
       method: "GET",
       path: "/api/candles",
-      price: "$0.002",
+      price: "$0.005",
       description: "Get historical OHLCV candles for any token by ID or contract address",
       toolName: "token_get_ohlcv_history",
       toolDescription: `Use this when you need historical price candlestick data for any token. Returns OHLCV candles in JSON.
@@ -111,7 +111,7 @@ Do NOT use for real-time orderbook -- use dex_analyze_orderbook_depth instead. D
     {
       method: "POST",
       path: "/api/candles",
-      price: "$0.002",
+      price: "$0.005",
       description: "Get historical OHLCV candles for any token by ID or contract address (POST variant)",
       toolName: "token_get_ohlcv_history",
       toolDescription: `Use this when you need historical price candlestick data for any token. Returns OHLCV candles in JSON. POST variant of token_get_ohlcv_history -- same params passed as JSON body instead of query string.
